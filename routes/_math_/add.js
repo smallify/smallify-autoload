@@ -14,18 +14,18 @@ module.exports = route({
           type: 'number'
         }
       }
-    },
-    response: {
-      type: 'object',
-      properties: {
-        sum: {
-          type: 'string'
-        }
-      }
     }
+    // response: {
+    //   type: 'object',
+    //   properties: {
+    //     sum: {
+    //       type: 'string'
+    //     }
+    //   }
+    // }
   },
   handler (req, rep) {
     const { a, b } = req.query
-    rep.send({ sum: a + b })
+    rep.send({ sum: a + b, params: req.params })
   }
 })

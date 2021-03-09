@@ -10,6 +10,14 @@ smallify.register(AutoLoad, {
   dirAsScope: true
 })
 
+smallify.route({
+  url: '/_test',
+  method: 'GET',
+  handler (req, rep) {
+    rep.send('this is test')
+  }
+})
+
 smallify.ready(e => {
   e && smallify.$log.error(e.message)
   smallify.print()

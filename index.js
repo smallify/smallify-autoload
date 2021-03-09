@@ -60,6 +60,7 @@ async function loadDirents (smallify, dir, depth, opts) {
       if (mod[kAutoloadRoute] === true) {
         const ex = path.extname(dirent.name)
         mod.url = `/${dirent.name.replace(ex, '')}`
+        mod.$IsAutoload = true
         smallify.route(mod)
       } else {
         smallify.register(mod)
@@ -70,6 +71,15 @@ async function loadDirents (smallify, dir, depth, opts) {
 
 module.exports = async function (smallify, options) {
   const opts = { ...defaults, ...options }
+
+  smallify.addHook('onRoute', function (route) {
+    const { url, $IsAutoload = false } = route
+
+    if ($IsAutoload) {
+      route.url = url.replace(/\/_/g, '/:')
+    }
+  })
+
   await loadDirents(smallify, opts.dir, 0, opts)
 }
 
